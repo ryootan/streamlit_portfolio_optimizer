@@ -15,22 +15,22 @@ ef.efficient_return(target_return)
 # ef.max_sharpe()
 weights = ef.clean_weights()
 weights_df = pd.DataFrame.from_dict(weights, orient = 'index')
-weights_df.columns = ['weights']
+weights_df.columns = ['Optimal Weights']
 
 expected_annual_return, annual_volatility, sharpe_ratio = ef.portfolio_performance(verbose=True)
-portfolio_performance_df = pd.DataFrame([(expected_annual_return*100).round(2),(annual_volatility*100).round(2),sharpe_ratio.round(2)],
-                                     index=['Expected Annual Return', 'Annual Volatility', 'Sharpe Ratio'],
+portfolio_performance_df = pd.DataFrame([(expected_annual_return*100).round(2),(annual_volatility*100).round(2)],
+                                     index=['Expected Annual Return (%)', 'Annual Volatility (%)'],
                                      columns=['Portfolio Performance'])
 
 
-x = 10
-'x: ', x 
+# x = 10
+# 'x: ', x 
 
 st.subheader("Optimization Result")
 st.dataframe(portfolio_performance_df)
 
-st.subheader("Optimized Max Sharpe Portfolio Weights")
-st.dataframe(weights_df)
+# st.subheader("Optimized Max Sharpe Portfolio Weights")
+st.dataframe(weights_df.reindex(assets)
 
 # st.subheader('Expected annual return: {}%'.format((expected_annual_return*100).round(2)))
 # st.subheader('Annual volatility: {}%'.format((annual_volatility*100).round(2)))
