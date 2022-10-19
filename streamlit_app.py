@@ -14,11 +14,11 @@ ef.add_constraint(lambda w: score @ w <= max_wgtavg_score)
 ef.efficient_return(target_return)
 # ef.max_sharpe()
 weights = ef.clean_weights()
-weights_df = pd.DataFrame.from_dict(weights, orient = 'index')
-weights_df.columns = ['Optimal Weights']
+weights_df = pd.DataFrame.from_dict(weights, orient = 'index')*100.0
+weights_df.columns = ['Optimal Weight (%)']
 
 expected_annual_return, annual_volatility, sharpe_ratio = ef.portfolio_performance(verbose=True)
-portfolio_performance_df = pd.DataFrame([(expected_annual_return*100).round(2),(annual_volatility*100).round(2)],
+portfolio_performance_df = pd.DataFrame([expected_annual_return*100.0,annual_volatility*100.0],
                                      index=['Expected Annual Return (%)', 'Annual Volatility (%)'],
                                      columns=['Portfolio Performance'])
 
