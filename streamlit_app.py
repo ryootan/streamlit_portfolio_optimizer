@@ -27,10 +27,10 @@ portfolio_performance_df = pd.DataFrame([expected_annual_return*100.0,annual_vol
 # 'x: ', x 
 
 st.subheader("Optimization Result")
-st.dataframe(portfolio_performance_df.style.format(precision=2)
+st.dataframe(portfolio_performance_df.style.format(precision=2))
 
 # st.subheader("Optimized Max Sharpe Portfolio Weights")
-st.dataframe(weights_df.reindex(assets).style.format(precision=2)
+st.dataframe(weights_df.reindex(assets).style.format(precision=2))
 
 # st.subheader('Expected annual return: {}%'.format((expected_annual_return*100).round(2)))
 # st.subheader('Annual volatility: {}%'.format((annual_volatility*100).round(2)))
