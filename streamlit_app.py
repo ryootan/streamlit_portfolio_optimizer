@@ -17,10 +17,11 @@ weights = ef.clean_weights()
 weights_df = pd.DataFrame.from_dict(weights, orient = 'index')
 weights_df.columns = ['weights']
 
-portfolio_performance_df = pd.DataFrame(ef.portfolio_performance(verbose=True),
+expected_annual_return, annual_volatility, sharpe_ratio = ef.portfolio_performance(verbose=True)
+portfolio_performance_df = pd.DataFrame([(expected_annual_return*100).round(2),(annual_volatility*100).round(2),sharpe_ratio,round(2)],
                                      index=['Expected Annual Return', 'Annual Volatility', 'Sharpe Ratio'],
                                      columns=['Portfolio Performance'])
-# expected_annual_return, annual_volatility, sharpe_ratio = ef.portfolio_performance(verbose=True)
+
 
 x = 10
 'x: ', x 
