@@ -30,7 +30,7 @@ st.subheader("Optimization Result")
 st.dataframe(portfolio_performance_df)
 
 # st.subheader("Optimized Max Sharpe Portfolio Weights")
-st.dataframe(weights_df.reindex(assets)
+st.dataframe(weights_df.reindex(assets))
 
 # st.subheader('Expected annual return: {}%'.format((expected_annual_return*100).round(2)))
 # st.subheader('Annual volatility: {}%'.format((annual_volatility*100).round(2)))
