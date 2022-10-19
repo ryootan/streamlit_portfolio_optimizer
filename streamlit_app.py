@@ -1,10 +1,13 @@
 import pandas as pd
-from pypfopt.expected_returns import mean_historical_return
-from pypfopt.risk_models import CovarianceShrinkage
+from pypfopt.efficient_frontier import EfficientFrontier
 
-from pypfopt import EfficientFrontier
-from pypfopt import risk_models
-from pypfopt import expected_returns
+assets = ['A','B']
+mu = pd.Series([1.0,2.0],index=assets)
+S = pd.DataFrame({'A':[0.01,0.05],'B':[0.05,1.00]},index=assets)
+ef = EfficientFrontier(mu, S)
+weights = ef.max_sharpe()
+
+
 
 x = 10
 'x: ', x 
