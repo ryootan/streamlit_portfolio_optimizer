@@ -4,9 +4,13 @@ from pypfopt.efficient_frontier import EfficientFrontier
 
 target_return = 3.0
 assets = ['A','B']
+score = [1.0,1.4]
+max_wgtavg_score = 2.0
+
 mu = pd.Series([1.0,20.0],index=assets)
 S = pd.DataFrame({'A':[0.01,0.05],'B':[0.05,1.00]},index=assets)
 ef = EfficientFrontier(mu, S)
+ef.add_constraint(lambda w: score @ w <= max_wgtavg_score)
 ef.efficient_return(target_return)
 # ef.max_sharpe()
 weights = ef.clean_weights()
