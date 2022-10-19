@@ -1,3 +1,4 @@
+import streamlit as st
 import pandas as pd
 from pypfopt.efficient_frontier import EfficientFrontier
 
