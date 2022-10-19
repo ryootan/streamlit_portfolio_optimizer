@@ -2,19 +2,25 @@ import streamlit as st
 import pandas as pd
 from pypfopt.efficient_frontier import EfficientFrontier
 
+target_return = 3.0
 assets = ['A','B']
 mu = pd.Series([1.0,20.0],index=assets)
 S = pd.DataFrame({'A':[0.01,0.05],'B':[0.05,1.00]},index=assets)
 ef = EfficientFrontier(mu, S)
-ef.max_sharpe()
+ef.efficient_return(target_return)
+# ef.max_sharpe()
 weights = ef.clean_weights()
 weights_df = pd.DataFrame.from_dict(weights, orient = 'index')
 weights_df.columns = ['weights']
 
-ef.portfolio_performance(verbose=True)
+expected_annual_return, annual_volatility, sharpe_ratio = ef.portfolio_performance(verbose=True)
 
 x = 10
 'x: ', x 
 
 st.subheader("Optimized Max Sharpe Portfolio Weights")
 st.dataframe(weights_df)
+
+st.subheader('Expected annual return: {}%'.format((expected_annual_return*100).round(2)))
+st.subheader('Annual volatility: {}%'.format((annual_volatility*100).round(2)))
+st.subheader('Sharpe Ratio: {}'.format(sharpe_ratio.round(2)))
