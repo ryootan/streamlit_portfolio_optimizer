@@ -2,6 +2,9 @@ import streamlit as st
 import pandas as pd
 from pypfopt.efficient_frontier import EfficientFrontier
 
+input_txt = st.sidebar.text_area('Input')
+input_df = pd.read_table(input_txt)
+
 target_return = 3.0
 assets = ['A','B']
 score = [1.0,1.4]
@@ -25,6 +28,9 @@ portfolio_performance_df = pd.DataFrame([expected_annual_return*100.0,annual_vol
 
 # x = 10
 # 'x: ', x 
+
+st.subheader("Input")
+st.dataframe(input_df)
 
 st.subheader("Optimization Result")
 st.dataframe(portfolio_performance_df.style.format(precision=2))
