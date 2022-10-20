@@ -19,35 +19,28 @@ if uploaded_file is not None:
   target_return = st.number_input('Insert your Target Return (% p.a.)',value=3.5) / 100.0
   max_risk_weight = st.number_input('Insert your Max. Risk Weight (%)',value=0.0) / 100.0
   input_format_df = pd.DataFrame({'Asset':vol.index})
-  input_format_df['Expected Return (% p.a.)'] = 0.0
+  input_format_df['Expected Annual Return (%)'] = 0.0
   input_format_df['Lower Bound (%)'] = 0.0
   input_format_df['Upper Bound (%)'] = 100.0
   input_format_df['Risk Weight (%)'] = 0.0
   
   input_txt = st.text_area('Insert optimization inputs',value=input_format_df.to_csv(sep='\t',index=False),height=100)
   input_df = pd.read_csv(StringIO(input_txt),sep='\t').set_index('Asset')
-  mu = input_df['Expected Return (% p.a.)'] / 100.0
+  mu = input_df['Expected Annual Return (%)'] / 100.0
   risk_weight = input_df['Risk Weight (%)'] / 100.0
   
-#   assets = ['A','B']
-#   score = [1.0,1.4]
-#   max_wgtavg_score = 2.0
-
-#   mu = pd.Series([1.0,20.0],index=assets)
-#   S = pd.DataFrame({'A':[0.01,0.05],'B':[0.05,1.00]},index=assets)
   ef = EfficientFrontier(mu, S)
   ef.add_constraint(lambda w: risk_weight.values @ w <= max_risk_weight)
   ef.efficient_return(target_return)
-  # ef.max_sharpe()
   weights = ef.clean_weights()
   weights_df = pd.DataFrame.from_dict(weights, orient = 'index')*100.0
   weights_df.columns = ['Optimal Weight (%)']
 
   expected_annual_return, annual_volatility, sharpe_ratio = ef.portfolio_performance(verbose=True)
-  portfolio_performance_df = pd.DataFrame([expected_annual_return*100.0,annual_volatility*100.0],
-                                       index=['Expected Annual Return (%)', 'Annual Volatility (%)'],
+  portfolio_performance_df = pd.DataFrame([expected_annual_return*100.0,annual_volatility*100.0,(risk_weight.values @ w)*100.0],
+                                       index=['Expected Annual Return (%)', 'Annual Volatility (%)','Risk Weight (%)'],
                                        columns=['Portfolio Performance'])
   
   st.subheader("Optimization Result")
-  st.dataframe(portfolio_performance_df.style.format(precision=2))
-  st.dataframe(weights_df.reindex(input_df.index).style.format(precision=2))
+  st.dataframe(portfolio_performance_df.style.format(precision=1))
+  st.dataframe(weights_df.reindex(input_df.index).style.format(precision=1))
