@@ -34,8 +34,8 @@ if uploaded_file is not None:
   # x = 10
   # 'x: ', x 
 
-  st.subheader("Input")
-  st.write(input_txt)
+#   st.subheader("Input")
+#   st.write(input_txt)
   # st.dataframe(input_df)
 
   st.subheader("Optimization Result")
@@ -43,7 +43,3 @@ if uploaded_file is not None:
 
   # st.subheader("Optimized Max Sharpe Portfolio Weights")
   st.dataframe(weights_df.reindex(assets).style.format(precision=2))
-
-  # st.subheader('Expected annual return: {}%'.format((expected_annual_return*100).round(2)))
-  # st.subheader('Annual volatility: {}%'.format((annual_volatility*100).round(2)))
-  # st.subheader('Sharpe Ratio: {}'.format(sharpe_ratio.round(2)))
