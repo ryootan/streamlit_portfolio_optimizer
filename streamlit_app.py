@@ -2,13 +2,10 @@ import streamlit as st
 import pandas as pd
 from pypfopt.efficient_frontier import EfficientFrontier
 
-# input_txt = st.sidebar.text_area('Input')
-# input_df = pd.read_table(input_txt)
-
 uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:
   risk_contribution_asset_class_df = pd.read_excel(uploaded_file,sheet_name = 'Risk Contribution - Asset Class').dropna()
-  risk_contribution_asset_class_df['Asset'] = [ele['Asset'] + '' if ele['FX Hedged'] == 'No' else ' (Hedged)' for risk_contribution_asset_class_df.iterrows()]
+  risk_contribution_asset_class_df['Asset'] = [ele['Asset'] + '' if ele['FX Hedged'] == 'No' else ' (Hedged)' for ele in risk_contribution_asset_class_df.iterrows()]
   risk_contribution_asset_class_df = risk_contribution_asset_class_df.set_index('Asset')
   risk_asset_class_corr_mtx_df = pd.read_excel(uploaded_file,sheet_name = 'Risk - Asset Class Corr Mtx').dropna().set_index('Asset Classes')
   st.write(risk_contribution_asset_class_df)
