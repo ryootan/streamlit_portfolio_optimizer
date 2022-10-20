@@ -21,7 +21,7 @@ if uploaded_file is not None:
   input_df['Upper Bound'] = 100.0
   input_df['Risk Weight'] = 0.0
   
-  st.write(input_df.to_csv(sep='\t')
+  st.write(input_df.to_csv(sep='\t'))
   
   input_txt = st.text_area('Insert optimization inputs')
     
