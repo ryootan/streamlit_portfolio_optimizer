@@ -12,7 +12,7 @@ if uploaded_file is not None:
   st.write(risk_contribution_asset_class_df)
   st.write(risk_asset_class_corr_mtx_df)
   
-  vol = risk_contribution_asset_class_df[['Asset Volatility']]
+  vol = risk_contribution_asset_class_df['Asset Volatility']
   corr = risk_asset_class_corr_mtx_df
   S = vol * corr * vol.T
   st.write(S)
