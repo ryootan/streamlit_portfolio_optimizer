@@ -14,7 +14,7 @@ if uploaded_file is not None:
   vol = risk_contribution_asset_class_df['Asset Volatility']
   corr = risk_asset_class_corr_mtx_df
   S = corr.mul(vol,axis='columns').mul(vol,axis='index')
-  st.write(S)
+#   st.write(S)
   
   target_return = st.number_input('Insert your Target Return (% p.a.)',value=3.5) / 100.0
   max_risk_weight = st.number_input('Insert your Max. Risk Weight (%)',value=0.0) / 100.0
@@ -36,7 +36,7 @@ if uploaded_file is not None:
 #   mu = pd.Series([1.0,20.0],index=assets)
 #   S = pd.DataFrame({'A':[0.01,0.05],'B':[0.05,1.00]},index=assets)
   ef = EfficientFrontier(mu, S)
-#   ef.add_constraint(lambda w: risk_weight @ w <= max_risk_weight)
+  ef.add_constraint(lambda w: risk_weight.values @ w <= max_risk_weight)
   ef.efficient_return(target_return)
   # ef.max_sharpe()
   weights = ef.clean_weights()
