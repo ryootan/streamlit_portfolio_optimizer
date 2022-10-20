@@ -8,15 +8,24 @@ if uploaded_file is not None:
   risk_contribution_asset_class_df['Asset'] = [ele['Asset'] + ('' if ele['FX Hedged'] == 'No' else ' (Hedged)') for _,ele in risk_contribution_asset_class_df.iterrows()]
   risk_contribution_asset_class_df = risk_contribution_asset_class_df.set_index('Asset')
   risk_asset_class_corr_mtx_df = pd.read_excel(uploaded_file,sheet_name = 'Risk - Asset Class Corr Mtx').dropna().set_index('Asset Classes')
-  st.write(risk_contribution_asset_class_df)
-  st.write(risk_asset_class_corr_mtx_df)
-  
+    
   vol = risk_contribution_asset_class_df['Asset Volatility']
   corr = risk_asset_class_corr_mtx_df
   S = corr.mul(vol,axis='columns').mul(vol,axis='index')
   st.write(S)
-
-  target_return = 3.0
+  
+  target_return = st.number_input('Insert your Target Return (% p.a.)',value=3.5)
+  input_df = pd.DataFrame({'Asset':vol.index})
+  input_df['Expected Return'] = 0.0
+  input_df['Lower Bound'] = 0.0
+  input_df['Upper Bound'] = 100.0
+  input_df['Risk Weight'] = 0.0
+  
+  st.write(input_df.to_csv(sep='\t')
+  
+  input_txt = st.text_area('Insert optimization inputs')
+    
+#   target_return = 3.0
   assets = ['A','B']
   score = [1.0,1.4]
   max_wgtavg_score = 2.0
