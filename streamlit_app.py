@@ -17,23 +17,26 @@ if uploaded_file is not None:
   st.write(S)
   
   target_return = st.number_input('Insert your Target Return (% p.a.)',value=3.5)
+  max_risk_weight = st.number_input('Insert your Max. Risk Weight (%)',value=0.0) / 100.0
   input_format_df = pd.DataFrame({'Asset':vol.index})
   input_format_df['Expected Return (% p.a.)'] = 0.0
   input_format_df['Lower Bound (%)'] = 0.0
   input_format_df['Upper Bound (%)'] = 100.0
   input_format_df['Risk Weight (%)'] = 0.0
   
-  input_txt = st.text_area('Insert optimization inputs',value=input_format_df.to_csv(sep='\t',index=False),height=30)
-  input_df = pd.read_csv(StringIO(input_txt),sep='\t')
+  input_txt = st.text_area('Insert optimization inputs',value=input_format_df.to_csv(sep='\t',index=False),height=50)
+  input_df = pd.read_csv(StringIO(input_txt),sep='\t').set_index('Asset')
+  mu = input_df['Expected Return (% p.a.)'] / 100.0
+  risk_weight = input_df['Risk Weight (%)'] / 100.0
   
-  assets = ['A','B']
-  score = [1.0,1.4]
-  max_wgtavg_score = 2.0
+#   assets = ['A','B']
+#   score = [1.0,1.4]
+#   max_wgtavg_score = 2.0
 
-  mu = pd.Series([1.0,20.0],index=assets)
-  S = pd.DataFrame({'A':[0.01,0.05],'B':[0.05,1.00]},index=assets)
+#   mu = pd.Series([1.0,20.0],index=assets)
+#   S = pd.DataFrame({'A':[0.01,0.05],'B':[0.05,1.00]},index=assets)
   ef = EfficientFrontier(mu, S)
-  ef.add_constraint(lambda w: score @ w <= max_wgtavg_score)
+  ef.add_constraint(lambda w: risk_weight @ w <= max_risk_weight)
   ef.efficient_return(target_return)
   # ef.max_sharpe()
   weights = ef.clean_weights()
