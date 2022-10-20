@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import io
+from io import StringIO
 from pypfopt.efficient_frontier import EfficientFrontier
 
 st.subheader("Input")
