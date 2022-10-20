@@ -13,7 +13,7 @@ if uploaded_file is not None:
   
   vol = risk_contribution_asset_class_df['Asset Volatility']
   corr = risk_asset_class_corr_mtx_df
-  S = corr.mul(vol,axis='column').mul(vol.axis='index')
+  S = corr.mul(vol,axis='column').mul(vol,axis='index')
   st.write(S)
 
   target_return = 3.0
