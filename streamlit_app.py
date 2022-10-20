@@ -1,7 +1,9 @@
 import streamlit as st
 import pandas as pd
+import io
 from pypfopt.efficient_frontier import EfficientFrontier
 
+st.subheader("Input")
 uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:
   risk_contribution_asset_class_df = pd.read_excel(uploaded_file,sheet_name = 'Risk Contribution - Asset Class').dropna()
@@ -16,14 +18,14 @@ if uploaded_file is not None:
   
   target_return = st.number_input('Insert your Target Return (% p.a.)',value=3.5)
   input_df = pd.DataFrame({'Asset':vol.index})
-  input_df['Expected Return'] = 0.0
-  input_df['Lower Bound'] = 0.0
-  input_df['Upper Bound'] = 100.0
-  input_df['Risk Weight'] = 0.0
+  input_format_df['Expected Return (% p.a.)'] = 0.0
+  input_format_df['Lower Bound (%)'] = 0.0
+  input_format_df['Upper Bound (%)'] = 100.0
+  input_format_df['Risk Weight (%)'] = 0.0
   
-  input_txt = st.text_area('Insert optimization inputs',value=input_df.to_csv(sep='\t',index=False),height=10)
-    
-#   target_return = 3.0
+  input_txt = st.text_area('Insert optimization inputs',value=input_format_df.to_csv(sep='\t',index=False),height=30)
+  input_df = pd.read_csv(StringIO(input_txt),sep='\t')
+  
   assets = ['A','B']
   score = [1.0,1.4]
   max_wgtavg_score = 2.0
@@ -47,7 +49,6 @@ if uploaded_file is not None:
   # x = 10
   # 'x: ', x 
 
-#   st.subheader("Input")
 #   st.write(input_txt)
   # st.dataframe(input_df)
 
