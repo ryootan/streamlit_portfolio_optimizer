@@ -38,7 +38,7 @@ if uploaded_file is not None:
 
   st.write(risk_weight @ weights_df)
   expected_annual_return, annual_volatility, sharpe_ratio = ef.portfolio_performance(verbose=True)
-  portfolio_performance_df = pd.DataFrame([expected_annual_return*100.0,annual_volatility*100.0,(risk_weight @ weights_df)],
+  portfolio_performance_df = pd.DataFrame([expected_annual_return*100.0,annual_volatility*100.0,float(risk_weight @ weights_df)],
                                        index=['Expected Annual Return (%)', 'Annual Volatility (%)','Risk Weight (%)'],
                                        columns=['Portfolio Performance'])
   
