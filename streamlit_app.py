@@ -7,8 +7,8 @@ from pypfopt.efficient_frontier import EfficientFrontier
 
 uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:
-  risk_contribution_asset_class_df = pd.read_excel(uploaded_file,sheet_name = 'Risk Contribution - Asset Class')
-  risk_asset_class_corr_mtx_df = pd.read_excel(uploaded_file,sheet_name = 'Risk - Asset Class Corr Mtx')
+  risk_contribution_asset_class_df = pd.read_excel(uploaded_file,sheet_name = 'Risk Contribution - Asset Class').dropna().set_index('Asset')
+  risk_asset_class_corr_mtx_df = pd.read_excel(uploaded_file,sheet_name = 'Risk - Asset Class Corr Mtx').dropna().set_index('Asset Classes')
   st.write(risk_contribution_asset_class_df)
   st.write(risk_asset_class_corr_mtx_df)
 
