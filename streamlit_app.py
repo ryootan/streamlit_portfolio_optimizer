@@ -17,7 +17,7 @@ if uploaded_file is not None:
   st.write(S)
   
   target_return = st.number_input('Insert your Target Return (% p.a.)',value=3.5)
-  input_df = pd.DataFrame({'Asset':vol.index})
+  input_format_df = pd.DataFrame({'Asset':vol.index})
   input_format_df['Expected Return (% p.a.)'] = 0.0
   input_format_df['Lower Bound (%)'] = 0.0
   input_format_df['Upper Bound (%)'] = 100.0
