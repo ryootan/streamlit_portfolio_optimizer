@@ -47,16 +47,7 @@ if uploaded_file is not None:
   portfolio_performance_df = pd.DataFrame([expected_annual_return*100.0,annual_volatility*100.0],
                                        index=['Expected Annual Return (%)', 'Annual Volatility (%)'],
                                        columns=['Portfolio Performance'])
-
-
-  # x = 10
-  # 'x: ', x 
-
-#   st.write(input_txt)
-  # st.dataframe(input_df)
-
+  
   st.subheader("Optimization Result")
   st.dataframe(portfolio_performance_df.style.format(precision=2))
-
-  # st.subheader("Optimized Max Sharpe Portfolio Weights")
-  st.dataframe(weights_df.reindex(assets).style.format(precision=2))
+  st.dataframe(weights_df.reindex(input_df.index).style.format(precision=2))
