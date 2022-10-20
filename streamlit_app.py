@@ -24,7 +24,7 @@ if uploaded_file is not None:
   input_format_df['Upper Bound (%)'] = 100.0
   input_format_df['Risk Weight (%)'] = 0.0
   
-  input_txt = st.text_area('Insert optimization inputs',value=input_format_df.to_csv(sep='\t',index=False),height=50)
+  input_txt = st.text_area('Insert optimization inputs',value=input_format_df.to_csv(sep='\t',index=False),height=100)
   input_df = pd.read_csv(StringIO(input_txt),sep='\t').set_index('Asset')
   mu = input_df['Expected Return (% p.a.)'] / 100.0
   risk_weight = input_df['Risk Weight (%)'] / 100.0
@@ -36,7 +36,7 @@ if uploaded_file is not None:
 #   mu = pd.Series([1.0,20.0],index=assets)
 #   S = pd.DataFrame({'A':[0.01,0.05],'B':[0.05,1.00]},index=assets)
   ef = EfficientFrontier(mu, S)
-  ef.add_constraint(lambda w: risk_weight @ w <= max_risk_weight)
+#   ef.add_constraint(lambda w: risk_weight @ w <= max_risk_weight)
   ef.efficient_return(target_return)
   # ef.max_sharpe()
   weights = ef.clean_weights()
