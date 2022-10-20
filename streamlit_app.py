@@ -36,8 +36,9 @@ if uploaded_file is not None:
   weights_df = pd.DataFrame.from_dict(weights, orient = 'index')*100.0
   weights_df.columns = ['Optimal Weight (%)']
 
+  st.write(risk_weight @ weights_df)
   expected_annual_return, annual_volatility, sharpe_ratio = ef.portfolio_performance(verbose=True)
-  portfolio_performance_df = pd.DataFrame([expected_annual_return*100.0,annual_volatility*100.0,(risk_weight @ weights_df)*100.0],
+  portfolio_performance_df = pd.DataFrame([expected_annual_return*100.0,annual_volatility*100.0,(risk_weight @ weights_df)],
                                        index=['Expected Annual Return (%)', 'Annual Volatility (%)','Risk Weight (%)'],
                                        columns=['Portfolio Performance'])
   
