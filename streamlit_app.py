@@ -11,6 +11,11 @@ if uploaded_file is not None:
   risk_asset_class_corr_mtx_df = pd.read_excel(uploaded_file,sheet_name = 'Risk - Asset Class Corr Mtx').dropna().set_index('Asset Classes')
   st.write(risk_contribution_asset_class_df)
   st.write(risk_asset_class_corr_mtx_df)
+  
+  vol = risk_contribution_asset_class_df[['Asset Volatility']]
+  corr = risk_asset_class_corr_mtx_df
+  S = vol * corr * vol.T
+  st.write(S)
 
   target_return = 3.0
   assets = ['A','B']
