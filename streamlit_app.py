@@ -16,8 +16,8 @@ if uploaded_file is not None:
   S = corr.mul(vol,axis='columns').mul(vol,axis='index')
 #   st.write(S)
   
-  target_return = st.number_input('Insert your Target Annual Return (%)',value=1.5) / 100.0
-  max_risk_weight = st.number_input('Insert your Max. Risk Weight (%)',value=0.0) / 100.0
+  target_return = st.number_input('Insert Target Annual Return (%)',value=1.5) / 100.0
+  max_risk_weight = st.number_input('Insert Max. Risk Weight (%)',value=0.0) / 100.0
   input_format_df = pd.DataFrame({'Asset':vol.index})
   input_format_df['Expected Annual Return (%)'] = 0.0
   input_format_df['Lower Bound (%)'] = 0.0
