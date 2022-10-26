@@ -29,7 +29,7 @@ if uploaded_file is not None:
   mu = input_df['Expected Annual Return (%)'] / 100.0
   risk_weight = input_df['Risk Weight (%)'] / 100.0
 
-  missing_asset = set(input_df.index) - set(S.index))
+  missing_asset = set(input_df.index) - set(S.index)
   if len(missing_asset) > 0:
     st.error('Missing ' + missing_asset)
   
