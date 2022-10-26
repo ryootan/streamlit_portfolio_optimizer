@@ -31,7 +31,7 @@ if uploaded_file is not None:
 
   missing_asset = set(input_df.index) - set(S.index)
   if len(missing_asset) > 0:
-    st.error('Missing ' + missing_asset)
+    st.error('Missing ' + ', '.join(missing_asset))
   
   ef = EfficientFrontier(mu, S.loc[mu.index,mu.index], weight_bounds=[tuple(x/100.0) for x in input_df[['Lower Bound (%)','Upper Bound (%)']].values])
   ef.add_constraint(lambda w: risk_weight.values @ w <= max_risk_weight)
