@@ -14,10 +14,9 @@ if uploaded_file is not None:
   vol = risk_contribution_asset_class_df['Asset Volatility']
   corr = risk_asset_class_corr_mtx_df
   S = corr.mul(vol,axis='columns').mul(vol,axis='index')
-#   st.write(S)
   
-  target_return = st.number_input('Insert Target Annual Return (%)',value=1.5) / 100.0
-  max_risk_weight = st.number_input('Insert Max. Risk Weight (%)',value=0.0) / 100.0
+  target_return = st.number_input('Insert Target Annual Return (%)',value=1.0) / 100.0
+  max_risk_weight = st.number_input('Insert Max. Risk Weight (%)',value=999.0) / 100.0
   input_format_df = pd.DataFrame({'Asset':vol.index})
   input_format_df['Expected Annual Return (%)'] = 0.0
   input_format_df['Lower Bound (%)'] = 0.0
@@ -26,12 +25,18 @@ if uploaded_file is not None:
   
   input_txt = st.text_area('Insert optimization inputs',value=input_format_df.to_csv(sep='\t',index=False),height=100)
   input_df = pd.read_csv(StringIO(input_txt),sep='\t').set_index('Asset')
+  
   mu = input_df['Expected Annual Return (%)'] / 100.0
   risk_weight = input_df['Risk Weight (%)'] / 100.0
+
+  missing_asset = set(input_df.index) - set(S.index))
+  if len(missing_asset) > 0:
+    st.error('Missing ' + missing_asset)
   
-  ef = EfficientFrontier(mu, S)
+  ef = EfficientFrontier(mu, S, weight_bounds=[tuple(x/100.0) for x in input_df[['Lower Bound (%)','Upper Bound (%)']].values])
   ef.add_constraint(lambda w: risk_weight.values @ w <= max_risk_weight)
   ef.efficient_return(target_return)
+  
   weights = ef.clean_weights()
   weights_df = pd.DataFrame.from_dict(weights, orient = 'index')*100.0
   weights_df.columns = ['Optimal Weight (%)']
