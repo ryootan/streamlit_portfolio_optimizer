@@ -1,3 +1,4 @@
 streamlit
 PyPortfolioOpt
 openpyxl
+cvxpy<1.2.2
